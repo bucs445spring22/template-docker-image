@@ -1,0 +1,5 @@
+###### Evergreen Requirements ######
+requests
+
+###### Requirements with Version Specifiers ######
+Flask>=2.0
