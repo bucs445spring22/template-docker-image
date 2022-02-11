@@ -35,7 +35,6 @@ def main():
         name = input("What is your name?")
         headers = {'Content-Type': 'application/json'}
         result = requests.post("http://db:8000/save", data=json.dumps({name: score}), headers=headers)
-        print(result)
 
     result = requests.get("http://db:8000/all")
     [print(score) for score in result.json()] 

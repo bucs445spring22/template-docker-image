@@ -16,13 +16,13 @@ def all():
 
 @app.route('/save', methods=['POST'])
 def save():
-    print(request.headers['Content-Type'])
+    app.logger.debug(f"{request.headers['Content-Type']}, {request.data}")
     if request.headers['Content-Type'] != 'application/json':
-        return jsonify(res='failure'), 400
-    data = request.json()
+         return jsonify(res='failure'), 400
+    data = request.json
     db.insert(data)
     return jsonify(res='success', **data)
 
 
 if __name__ ==  '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=8000)

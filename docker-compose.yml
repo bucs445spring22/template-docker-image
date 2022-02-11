@@ -16,13 +16,16 @@ services:
     tty: true # docker run -t
     depends_on:
       - db
-    command: ["python", "main.py"]
+    command: ["ash"]
   db:
     image: db_example:latest
+    working_dir: /var/db
+    environment:
+      - FLASK_DEBUG=1
     build: 
       context: .
       dockerfile: db.Dockerfile
-    working_dir: /var/db
+    
     container_name: db
     volumes:
       - ./db:/var/db
