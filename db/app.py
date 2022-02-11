@@ -9,22 +9,17 @@ app = Flask(__name__)
 db = TinyDB('db.json')
 
 
-@app.route('/', methods=['GET'])
-def index():
-    return 'Hello, world!'
-
-
-@app.route('/api/all', methods=['GET'])
+@app.route('/all', methods=['GET'])
 def all():
     return jsonify(db.all())
 
 
-@app.route('/api/save', methods=['POST'])
+@app.route('/save', methods=['POST'])
 def save():
-    # Bad request
+    print(request.headers['Content-Type'])
     if request.headers['Content-Type'] != 'application/json':
         return jsonify(res='failure'), 400
-    data = request.json
+    data = request.json()
     db.insert(data)
     return jsonify(res='success', **data)
 

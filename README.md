@@ -8,13 +8,16 @@ A template for a containerized python app
 
 #### Build
 
-docker build -t image_name .
+docker build -t `image_name` .
 
 #### Run
 
-docker run image_name
-docker run -d -it --name app -p 80:5000 image_name
+docker run `image_name`
+docker run -d -it --name app -p 80:5000 `image_name`
 
+#### Attach
+
+docker attach `container_name`
 #### Volumes
 
 docker run --rm -v "$(pwd)/app:/var/app docker-example"

@@ -1,22 +1,10 @@
 import requests
-import time
 import random
-from threading import Thread
-from dataclasses import dataclass
-
-@dataclass
-class Config:
-    num_seconds: int = 3
-    time_remaining: int = 0
-
-def guess_answer():
-    return int(input("Which is your guess?"))
 
 def main():
-    result = requests.get("https://opentdb.com/api.php?amount=5")
+    result = requests.get("https://opentdb.com/api.php?amount=3")
     score = 0
     data = result.json()
-    config = Config()
     for k in data['results']:
         print(f'{k["question"]}')
         answers = k['incorrect_answers']+[k['correct_answer']]
@@ -29,9 +17,11 @@ def main():
 
     if input("Would you like to save your score? [Y/n]").lower() == 'y':
         name = input("What is your name?")
-        result = requests.post("http://app_net:5000/save", data={name: score})
+        result = requests.post("http://db:8000/save", data={name: score})
         print(result)
+
+    result = requests.get("http://db:8000/all")
+    [print(score) for score in result.json()] 
     
-        
 if __name__ == "__main__":
     main()
