@@ -3,33 +3,8 @@ version: "3"
 services:
   app:
     image: app_example:latest
-    build: 
-      context: .
-      dockerfile: app.Dockerfile
-    working_dir: /var/app
-    container_name: app
-    networks:
-      - app_net
+    build: .
     volumes:
       - ./app:/var/app
-    stdin_open: true # docker run -i
-    tty: true # docker run -t
-    depends_on:
-      - db
-    command: ["python", "main.py"]
-  db:
-    image: db_example:latest
-    build: 
-      context: .
-      dockerfile: db.Dockerfile
-    working_dir: /var/db
-    container_name: db
-    volumes:
-      - ./db:/var/db
-    networks:
-      - app_net
-    command: ['flask', 'run', '--host=0.0.0.0', '--port=8000']
-    
-
-networks:
-  app_net:
+    stdin_open: true # -i
+    tty: true # -t
