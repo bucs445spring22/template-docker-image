@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  app:
+    image: app_example:latest
+    build: 
+      context: ./config
+      dockerfile: app.Dockerfile
+    container_name: app
+    networks:
+      - app_net
+    volumes:
+      - ./app:/var/app
+    working_dir: /var/app
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    command: ["sh"]
+  db:
+    image: db_example:latest
+    build: 
+      context: .
+      dockerfile: db.Dockerfile
+    container_name: db
+    command: ['flask', 'run', '--host=0.0.0.0:5000']
+    environment:
+      - FLASK_APP=db
+    volumes:
+      - ./db:/var/db
+    working_dir: /var/db
+    networks:
+      - app_net
+    depends_on:
+      - app
+
+networks:
+  app_net:
