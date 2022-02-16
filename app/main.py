@@ -1,12 +1,14 @@
-import requests
+import json
 import random
 
-def main():
+import requests
 
+def main():
     result = requests.get("https://opentdb.com/api.php?amount=3")
-    score = 0
     data = result.json()
 
+    score = 0
+    
     for k in data['results']:
 
         print(f'{k["question"]}')
@@ -28,6 +30,15 @@ def main():
         input("[press any key to continue]")
 
     print(f"You got {score} right!")
+
+    if input("Would you like to save your score? [Y/n]").lower() == 'y':
+        name = input("What is your name?")
+        headers = {'Content-Type': 'application/json'}
+        result = requests.post("http://db:8000/save", data=json.dumps({name: score}), headers=headers)
+
+    result = requests.get("http://db:8000/all")
+    
+    [print(score) for score in result.json()] 
     
 if __name__ == "__main__":
     main()

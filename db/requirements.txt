@@ -1,0 +1,6 @@
+###### Evergreen Requirements ######
+requests
+tinydb
+
+###### Requirements with Version Specifiers ######
+Flask>=2.0
